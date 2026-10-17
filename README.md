@@ -147,10 +147,12 @@ There are no frontend unit tests (see section 11).
   2. Added Micrometer and Prometheus for monitoring and metrics collection
 - **What I reviewed most carefully:** 
   1. **Full code walk through and understood the flow as per the requirement**
-  2. Undo rules in computer mode
-  2. Scoreboard update-once logic
-  3. Move validation order
-  4. 
+  2. Verified the API contracts
+  3. Checked for security vulnerabilities
+  4. Undo rules in computer mode
+  5. Scoreboard update-once logic
+  6. Move validation order
+  7. Checked the unit test cases
 
 ## 9. Design decisions
 
@@ -215,7 +217,7 @@ SQLite persistence, a minimax "hard" computer mode, game eviction/expiry, Angula
 OpenAPI documentation, a Grafana dashboard on top of the Prometheus metrics, Docker Compose for one-command startup
 of the whole stack.
 
-## 14. Logging and monitoring
+## 14. Logging
 
 ### Logging (Log4j2)
 
