@@ -135,8 +135,6 @@ There are no frontend unit tests (see section 11).
 
 ## 8. AI tools and prompt summary
 
-> **Edit this section to describe your own process before you submit. The panel will ask about it.**
-
 - **Tool:** Claude (Anthropic) generated the first version of the code, tests and this README.
 - **Prompt flow:**
   1. Gave Claude the problem statement and asked for a full solution.
@@ -144,11 +142,15 @@ There are no frontend unit tests (see section 11).
      derived board/status, mode-aware undo, scoreboard reconciliation.
   3. Generated the Spring Boot API, the Angular app and the tests; checked the Java rules code by compiling it
      and running a scripted scenario run.
-  4. The first backend was written in .NET by mistake (the requirement was read from a different copy of the
-     problem statement) and was rebuilt in Java. The Angular app and API contract were unchanged.
-- **What I changed manually:** _(fill in)_
-- **What I reviewed most carefully:** undo rules in computer mode, scoreboard update-once logic, move
-  validation order. _(adjust to what you actually reviewed)_
+- **What I changed manually:**
+  1. Added Log4j2 for logging purposes
+  2. Added Micrometer and Prometheus for monitoring and metrics collection
+- **What I reviewed most carefully:** 
+  1. **Full code walk through and understood the flow as per the requirement**
+  2. Undo rules in computer mode
+  2. Scoreboard update-once logic
+  3. Move validation order
+  4. 
 
 ## 9. Design decisions
 
@@ -170,7 +172,7 @@ There are no frontend unit tests (see section 11).
   typed API service. The game id is kept in `sessionStorage` so a refresh resumes the game; if the server no
   longer knows it, a new game starts.
 
-### Trade-offs
+## 10. Trade-offs
 
 | Choice | What it buys | What it costs |
 | --- | --- | --- |
@@ -185,7 +187,7 @@ There are no frontend unit tests (see section 11).
 | **Switching mode mid-game resets the board** | The two modes have different turn and undo rules, so converting a game in progress would be messy | You lose the current game when you switch |
 | **Test effort focused on the backend** | Rules, state transitions and HTTP status codes are covered | No Angular unit tests (see Known limitations) |
 
-## 10. Clarifications and assumptions
+## 11. Clarifications and assumptions
 
 - **Scoreboard and Undo: Option B, undo is allowed after completion.** Undoing a won or drawn game reopens it
   and takes its result off the scoreboard. Replaying to the end counts it again. The service does this by
@@ -197,7 +199,7 @@ There are no frontend unit tests (see section 11).
 - Row and column are zero-based in the API and shown one-based in the UI.
 - In Computer mode the human always plays X and goes first.
 
-## 11. Known limitations
+## 12. Known limitations
 
 - In-memory storage: restarting the backend clears all games and the scoreboard.
 - Games are never evicted from memory (fine for a local exercise).
@@ -207,13 +209,13 @@ There are no frontend unit tests (see section 11).
 - The computer is rule-based, not unbeatable.
 - Metrics live in memory: counters restart from zero when the backend restarts, and the Actuator endpoints are unauthenticated.
 
-## 12. Future improvements
+## 13. Future improvements
 
 SQLite persistence, a minimax "hard" computer mode, game eviction/expiry, Angular component and service tests,
 OpenAPI documentation, a Grafana dashboard on top of the Prometheus metrics, Docker Compose for one-command startup
 of the whole stack.
 
-## Logging and monitoring
+## 14. Logging and monitoring
 
 ### Logging (Log4j2)
 
@@ -231,6 +233,8 @@ excluded in `backend/pom.xml`). Configuration is `backend/src/main/resources/log
 2026-10-16 10:15:04.003 DEBUG [http-nio-5080-exec-3] c.e.t.s.GameService - Game 87a1...: O played cell 4 (move 2)
 2026-10-16 10:15:09.870 WARN  [http-nio-5080-exec-5] c.e.t.a.ApiExceptionHandler - Rejected request (409): That cell is already taken.
 ```
+
+## 15. Monitoring
 
 ### Actuator endpoints
 
@@ -286,7 +290,11 @@ Without Docker, install Prometheus yourself and use the same file after changing
 The target `host.docker.internal:5080` works with Docker Desktop and, through the `extra_hosts` entry in
 `docker-compose.yml`, on Linux.
 
-## Project layout
+## 16. Security features
+
+- Cross Origin Resource Sharing(CORS)
+
+## 17. Project layout
 
 ```
 backend/
