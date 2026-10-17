@@ -1,0 +1,14 @@
+# Prometheus scrape configuration for the Tic Tac Toe API.
+global:
+  scrape_interval: 5s       # short interval so a demo shows data quickly
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: tic-tac-toe-api
+    metrics_path: /actuator/prometheus
+    static_configs:
+      # Prometheus runs in Docker; host.docker.internal points at the machine running the Spring Boot app.
+      # If you run Prometheus directly on your machine instead, change this to 'localhost:5080'.
+      - targets: ['host.docker.internal:5080']
+        labels:
+          app: tic-tac-toe-api

@@ -1,0 +1,11 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: tic-tac-toe-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    # Lets the container reach the app on the host (needed on Linux; Docker Desktop has it built in).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -1,0 +1,20 @@
+# Java / Maven
+target/
+*.class
+*.log
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+out-tsc/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Application logs (Log4j2 rolling file)
+logs/
